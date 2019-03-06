@@ -210,8 +210,8 @@ Camera:
   m_GameObject: {fileID: 282840810}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.5322179, g: 0.70679563, b: 0.9811321, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -284,6 +284,16 @@ MonoBehaviour:
   fallSpeed: 1
   level: 0
   cube: {fileID: 1628295639649090, guid: 0afd35a9a591df94e8946f336fb79e35, type: 2}
+  baseMat: {fileID: 2100000, guid: 7e11b033e8fd8ed41a385671c2f2f900, type: 2}
+  mats:
+  - {fileID: 2100000, guid: 814dd836c73c53744ad5ffb50cbfd4db, type: 2}
+  - {fileID: 2100000, guid: efb86bfd9145d7e40b02927b31959fc0, type: 2}
+  - {fileID: 2100000, guid: ba18a45d338b90a45b1b247491a13f9b, type: 2}
+  - {fileID: 2100000, guid: ffed059be061b7b4aa4dc2323b5f0414, type: 2}
+  - {fileID: 2100000, guid: e865a0cf4c8ce264ebc79c984c37e69b, type: 2}
+  - {fileID: 2100000, guid: 498a67d887ab5194f98b3ce8ddecbc0e, type: 2}
+  - {fileID: 2100000, guid: 37088b6285b37b944a54f1b5557f89df, type: 2}
+  - {fileID: 2100000, guid: 728e8c1cab2e78942ae81261b157ceb1, type: 2}
 --- !u!4 &1348454236
 Transform:
   m_ObjectHideFlags: 0
