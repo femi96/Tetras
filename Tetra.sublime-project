@@ -1,0 +1,37 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "Assets/Scripts",
+			"file_exclude_patterns":
+			[
+				"*.dll",
+				"*.meta"
+			]
+		}
+	],
+
+	"solution_file": "./Tetra.sln",
+
+	"settings":
+	{
+		"AStyleFormatter":
+		{	
+			"autoformat_on_save": true,
+			"options_default":
+			{
+				"style": "google",
+
+				// Indentation options
+				"indent": "spaces",
+				"indent-spaces": 2,
+
+				// Padding options
+				"break-blocks": "default",
+				"pad-oper": true,
+				"unpad-paren": true,
+			}
+		}
+	}
+}
