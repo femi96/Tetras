@@ -25,6 +25,11 @@ public class Game : MonoBehaviour {
   public float level = 0;
   private float fallTime = 0;
 
+  private bool inGame = false;
+
+  private int score = 0;
+  private int highScore = 0;
+
   public GameObject cube;
   public Material baseMat;
   public Material[] mats;
@@ -37,6 +42,19 @@ public class Game : MonoBehaviour {
   private List<TetraType> tetraCubeQueue;
 
   void Start() {
+    StartGame();
+  }
+
+  void Update() {
+    if (inGame) {
+      CheckInput();
+      UpdateFall();
+    }
+  }
+
+  // TODO: Add UI reset and score
+
+  private void StartGame() {
     gridBlocks = new GameObject[gridSizeX, gridHeight, gridSizeZ];
     currentCoords = new Vector3Int[4];
     currentBlocks = new GameObject[4];
@@ -53,11 +71,15 @@ public class Game : MonoBehaviour {
     }
 
     NewTetraCube();
+    score = 0;
+    inGame = true;
   }
 
-  void Update() {
-    CheckInput();
-    UpdateFall();
+  private void EndGame() {
+    inGame = false;
+
+    if (highScore < score)
+      highScore = score;
   }
 
   private void LockTetraCube() {
@@ -71,8 +93,6 @@ public class Game : MonoBehaviour {
   }
 
   private void NewTetraCube() {
-    // TODO: If blocked, end game
-
     if (tetraCubeQueue.Count == 0) {
       // Populate
       tetraCubeQueue = new List<TetraType>() {
@@ -103,57 +123,57 @@ public class Game : MonoBehaviour {
 
     switch (type) {
     case TetraType.I:
-      currentCoords[0] = new Vector3Int(cx - 2, l, cz);
+      currentCoords[2] = new Vector3Int(cx - 2, l, cz);
       currentCoords[1] = new Vector3Int(cx - 1, l, cz);
-      currentCoords[2] = new Vector3Int(cx + 0, l, cz);
+      currentCoords[0] = new Vector3Int(cx + 0, l, cz);
       currentCoords[3] = new Vector3Int(cx + 1, l, cz);
       break;
 
     case TetraType.O:
-      currentCoords[0] = new Vector3Int(cx - 1, l, cz - 1);
-      currentCoords[1] = new Vector3Int(cx - 1, l, cz + 0);
-      currentCoords[2] = new Vector3Int(cx + 0, l, cz - 1);
-      currentCoords[3] = new Vector3Int(cx + 0, l, cz + 0);
+      currentCoords[0] = new Vector3Int(cx + 0, l, cz + 0);
+      currentCoords[1] = new Vector3Int(cx + 0, l, cz - 1);
+      currentCoords[2] = new Vector3Int(cx - 1, l, cz + 0);
+      currentCoords[3] = new Vector3Int(cx - 1, l, cz - 1);
       break;
 
     case TetraType.L:
-      currentCoords[0] = new Vector3Int(cx - 1, l, cz + 0);
-      currentCoords[1] = new Vector3Int(cx + 0, l, cz + 0);
+      currentCoords[1] = new Vector3Int(cx - 1, l, cz + 0);
+      currentCoords[0] = new Vector3Int(cx + 0, l, cz + 0);
       currentCoords[2] = new Vector3Int(cx + 1, l, cz + 0);
       currentCoords[3] = new Vector3Int(cx - 1, l, cz - 1);
       break;
 
     case TetraType.T:
-      currentCoords[0] = new Vector3Int(cx - 1, l, cz + 0);
-      currentCoords[1] = new Vector3Int(cx + 0, l, cz + 0);
+      currentCoords[1] = new Vector3Int(cx - 1, l, cz + 0);
+      currentCoords[0] = new Vector3Int(cx + 0, l, cz + 0);
       currentCoords[2] = new Vector3Int(cx + 1, l, cz + 0);
       currentCoords[3] = new Vector3Int(cx + 0, l, cz - 1);
       break;
 
     case TetraType.N:
-      currentCoords[0] = new Vector3Int(cx - 1, l, cz - 1);
-      currentCoords[1] = new Vector3Int(cx + 0, l, cz + 0);
+      currentCoords[1] = new Vector3Int(cx - 1, l, cz - 1);
+      currentCoords[0] = new Vector3Int(cx + 0, l, cz + 0);
       currentCoords[2] = new Vector3Int(cx + 1, l, cz + 0);
       currentCoords[3] = new Vector3Int(cx + 0, l, cz - 1);
       break;
 
     case TetraType.TL:
-      currentCoords[0] = new Vector3Int(cx - 1, l, cz + 0);
-      currentCoords[1] = new Vector3Int(cx + 0, l, cz + 0);
+      currentCoords[1] = new Vector3Int(cx - 1, l, cz + 0);
+      currentCoords[0] = new Vector3Int(cx + 0, l, cz + 0);
       currentCoords[2] = new Vector3Int(cx + 0, l, cz - 1);
       currentCoords[3] = new Vector3Int(cx + 0, l - 1, cz - 1);
       break;
 
     case TetraType.TR:
-      currentCoords[0] = new Vector3Int(cx - 1, l, cz + 0);
-      currentCoords[1] = new Vector3Int(cx + 0, l, cz + 0);
+      currentCoords[1] = new Vector3Int(cx - 1, l, cz + 0);
+      currentCoords[0] = new Vector3Int(cx + 0, l, cz + 0);
       currentCoords[2] = new Vector3Int(cx + 0, l, cz - 1);
       currentCoords[3] = new Vector3Int(cx - 1, l - 1, cz + 0);
       break;
 
     case TetraType.A:
-      currentCoords[0] = new Vector3Int(cx - 1, l, cz + 0);
-      currentCoords[1] = new Vector3Int(cx + 0, l, cz + 0);
+      currentCoords[1] = new Vector3Int(cx - 1, l, cz + 0);
+      currentCoords[0] = new Vector3Int(cx + 0, l, cz + 0);
       currentCoords[2] = new Vector3Int(cx + 0, l, cz - 1);
       currentCoords[3] = new Vector3Int(cx + 0, l - 1, cz + 0);
       break;
@@ -162,7 +182,12 @@ public class Game : MonoBehaviour {
       throw new Exception("Missing Type in NewTetraCube");
     }
 
-    Debug.Log(type);
+    foreach (Vector3Int coords in currentCoords) {
+      if (gridBlocks[coords.x, coords.y, coords.z] != null) {
+        EndGame();
+        return;
+      }
+    }
 
     for (int i = 0; i < currentCoords.Length; i++) {
       currentBlocks[i] = Instantiate(cube, transform);
@@ -172,7 +197,6 @@ public class Game : MonoBehaviour {
   }
 
   private void CheckInput() {
-    // TODO: Rotate inputs
     // TODO: Camera controls
     // TODO: Vary control based oncamera direction
 
@@ -184,6 +208,10 @@ public class Game : MonoBehaviour {
       MoveBlock(0, 0, 1);
     } else if (Input.GetKeyDown(KeyCode.S)) {
       MoveBlock(0, 0, -1);
+    } else if (Input.GetKeyDown(KeyCode.Q)) {
+      RotateBlock(1, 0, 0);
+    } else if (Input.GetKeyDown(KeyCode.E)) {
+      RotateBlock(0, 0, 1);
     }
   }
 
@@ -203,7 +231,6 @@ public class Game : MonoBehaviour {
   }
 
   private void ClearLines() {
-    // TODO: Add scoring
     // TODO: Add effects
     // Remove cubes
     List<int> layers = new List<int>();
@@ -246,6 +273,16 @@ public class Game : MonoBehaviour {
         }
       }
     }
+
+    // Score
+    // TODO: Add comboing
+    int bonus = 100;
+
+    for (int l = 1; l < layers.Count; l++) {
+      bonus *= 3;
+    }
+
+    score += bonus;
   }
 
   private bool MoveBlock(int x, int y, int z) {
@@ -268,6 +305,44 @@ public class Game : MonoBehaviour {
     for (int i = 0; i < currentCoords.Length; i++) {
       currentCoords[i] += new Vector3Int(x, y, z);
       currentBlocks[i].transform.position = currentCoords[i] + gridOffset;;
+    }
+
+    return true;
+  }
+
+  private bool RotateBlock(int x, int y, int z) {
+
+    // Find center
+    Vector3Int center = currentCoords[0];
+
+    // Rotate current position to new position
+    Vector3Int[] newCoords = new Vector3Int[4];
+
+    for (int i = 0; i < currentCoords.Length; i++) {
+      Vector3 rel = currentCoords[i] - center;
+      Vector3 newPos = center + Quaternion.Euler(90 * x, 90 * y, 90 * z) * rel;
+      newCoords[i] = new Vector3Int(Mathf.RoundToInt(newPos.x), Mathf.RoundToInt(newPos.y), Mathf.RoundToInt(newPos.z));
+    }
+
+    // Check new position for collision
+    foreach (Vector3Int coords in newCoords) {
+      int nx = coords.x;
+      int ny = coords.y;
+      int nz = coords.z;
+      bool collision = false;
+      collision = collision || nx >= gridSizeX || nx < 0;
+      collision = collision || ny >= gridHeight || ny < 0;
+      collision = collision || nz >= gridSizeZ || nz < 0;
+      collision = collision || gridBlocks[nx, ny, nz] != null;
+
+      if (collision)
+        return false;
+    }
+
+    // Move to new position
+    for (int i = 0; i < currentCoords.Length; i++) {
+      currentCoords[i] = newCoords[i];
+      currentBlocks[i].transform.position = currentCoords[i] + gridOffset;
     }
 
     return true;

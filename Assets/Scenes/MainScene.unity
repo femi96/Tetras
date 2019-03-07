@@ -280,7 +280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSizeX: 4
   gridSizeZ: 4
-  gridHeight: 6
+  gridHeight: 16
   fallSpeed: 1
   level: 0
   cube: {fileID: 1628295639649090, guid: 0afd35a9a591df94e8946f336fb79e35, type: 2}
