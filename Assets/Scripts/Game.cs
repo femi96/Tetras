@@ -296,6 +296,8 @@ public class Game : MonoBehaviour {
     }
 
     // Lower lines
+    layers.Reverse();
+
     foreach (int layer in layers) {
       for (int l = layer; l < gridHeight; l++) {
         for (int i = 0; i < gridSizeX; i++) {
