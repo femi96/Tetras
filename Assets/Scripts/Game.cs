@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum TetraType {
   I,
@@ -41,8 +42,14 @@ public class Game : MonoBehaviour {
 
   private List<TetraType> tetraCubeQueue;
 
+  [Header("UI")]
+  public GameObject resetButton;
+  public Text scoreText;
+  public Text highScoreText;
+
   void Start() {
-    StartGame();
+    highScoreText.text = "" + highScore;
+    scoreText.text = "" + score;
   }
 
   void Update() {
@@ -52,9 +59,11 @@ public class Game : MonoBehaviour {
     }
   }
 
-  // TODO: Add UI reset and score
+  public void StartGame() {
+    foreach (Transform child in transform) {
+      Destroy(child.gameObject);
+    }
 
-  private void StartGame() {
     gridBlocks = new GameObject[gridSizeX, gridHeight, gridSizeZ];
     currentCoords = new Vector3Int[4];
     currentBlocks = new GameObject[4];
@@ -73,13 +82,14 @@ public class Game : MonoBehaviour {
     NewTetraCube();
     score = 0;
     inGame = true;
+
+    resetButton.SetActive(false);
   }
 
   private void EndGame() {
     inGame = false;
 
-    if (highScore < score)
-      highScore = score;
+    resetButton.SetActive(true);
   }
 
   private void LockTetraCube() {
@@ -199,6 +209,7 @@ public class Game : MonoBehaviour {
   private void CheckInput() {
     // TODO: Camera controls
     // TODO: Vary control based oncamera direction
+    // TODO: Add preview and slam
 
     if (Input.GetKeyDown(KeyCode.A)) {
       MoveBlock(1, 0, 0);
@@ -276,13 +287,21 @@ public class Game : MonoBehaviour {
 
     // Score
     // TODO: Add comboing
-    int bonus = 100;
+    if (layers.Count > 0) {
+      int bonus = 100;
 
-    for (int l = 1; l < layers.Count; l++) {
-      bonus *= 3;
+      for (int l = 1; l < layers.Count; l++) {
+        bonus *= 3;
+      }
+
+      score += bonus;
+
+      if (highScore < score)
+        highScore = score;
     }
 
-    score += bonus;
+    highScoreText.text = "" + highScore;
+    scoreText.text = "" + score;
   }
 
   private bool MoveBlock(int x, int y, int z) {
