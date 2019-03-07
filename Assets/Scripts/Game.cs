@@ -207,8 +207,7 @@ public class Game : MonoBehaviour {
   }
 
   private void CheckInput() {
-    // TODO MVP: Vary control based oncamera direction
-    // TODO MVP: Add preview and slam
+    // TODO MVP: Add fall preview
     // TODO MVP: Hold piece
 
     Vector3 camDirection = Camera.main.transform.forward;
@@ -243,6 +242,8 @@ public class Game : MonoBehaviour {
       RotateBlock(-fx, 0, -fz);
     } else if (Input.GetKeyDown(KeyCode.R)) {
       RotateBlock(0, 1, 0);
+    } else if (Input.GetKeyDown(KeyCode.Space)) {
+      SlamBlock();
     }
   }
 
@@ -322,6 +323,16 @@ public class Game : MonoBehaviour {
 
     highScoreText.text = "" + highScore;
     scoreText.text = "" + score;
+  }
+
+  private void SlamBlock() {
+    bool falling = true;
+
+    while (falling) {
+      falling = MoveBlock(0, -1, 0);
+    }
+
+    fallTime = 1.0f;
   }
 
   private bool MoveBlock(int x, int y, int z) {
