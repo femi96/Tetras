@@ -32,11 +32,15 @@ public class Game : MonoBehaviour {
   private int highScore = 0;
 
   public GameObject cube;
+  public GameObject previewCube;
   public Material baseMat;
   public Material[] mats;
 
   public Vector3Int[] currentCoords;
   private GameObject[] currentBlocks;
+
+  public Vector3Int[] previewCoords;
+  private GameObject[] previewBlocks;
 
   private GameObject[, ,] gridBlocks;
 
@@ -67,6 +71,8 @@ public class Game : MonoBehaviour {
     gridBlocks = new GameObject[gridSizeX, gridHeight, gridSizeZ];
     currentCoords = new Vector3Int[4];
     currentBlocks = new GameObject[4];
+    previewCoords = new Vector3Int[4];
+    previewBlocks = new GameObject[4];
     gridOffset = -0.5f * new Vector3(gridSizeX, 0, gridSizeZ) + new Vector3(0.5f, 0, 0.5f);
     tetraCubeQueue = new List<TetraType>();
 
@@ -204,10 +210,11 @@ public class Game : MonoBehaviour {
       currentBlocks[i].transform.position = currentCoords[i] + gridOffset;
       currentBlocks[i].GetComponent<Renderer>().material = m;
     }
+
+    UpdatePreview();
   }
 
   private void CheckInput() {
-    // TODO MVP: Add fall preview
     // TODO MVP: Hold piece
 
     Vector3 camDirection = Camera.main.transform.forward;
@@ -357,6 +364,7 @@ public class Game : MonoBehaviour {
       currentBlocks[i].transform.position = currentCoords[i] + gridOffset;;
     }
 
+    UpdatePreview();
     return true;
   }
 
@@ -395,6 +403,37 @@ public class Game : MonoBehaviour {
       currentBlocks[i].transform.position = currentCoords[i] + gridOffset;
     }
 
+    UpdatePreview();
     return true;
+  }
+
+  private void UpdatePreview() {
+
+    for (int i = 0; i < previewCoords.Length; i++) {
+      previewCoords[i] = currentCoords[i];
+    }
+
+    bool collision = false;
+
+    while (!collision) {
+      foreach (Vector3Int coords in previewCoords) {
+        int ny = coords.y - 1;
+        collision = collision || ny >= gridHeight || ny < 0;
+        collision = collision || gridBlocks[coords.x, ny, coords.z] != null;
+      }
+
+      if (!collision) {
+        for (int i = 0; i < previewCoords.Length; i++) {
+          previewCoords[i] += new Vector3Int(0, -1, 0);
+        }
+      }
+    }
+
+    for (int i = 0; i < previewBlocks.Length; i++) {
+      if (previewBlocks[i] == null)
+        previewBlocks[i] = Instantiate(previewCube, transform);
+
+      previewBlocks[i].transform.position = previewCoords[i] + gridOffset;
+    }
   }
 }

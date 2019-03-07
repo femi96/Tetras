@@ -674,6 +674,8 @@ MonoBehaviour:
   level: 0
   inGame: 0
   cube: {fileID: 1628295639649090, guid: 0afd35a9a591df94e8946f336fb79e35, type: 2}
+  previewCube: {fileID: 1208080461853788, guid: cf0b3b676c48a5944b78915ad8a78d00,
+    type: 2}
   baseMat: {fileID: 2100000, guid: 7e11b033e8fd8ed41a385671c2f2f900, type: 2}
   mats:
   - {fileID: 2100000, guid: 814dd836c73c53744ad5ffb50cbfd4db, type: 2}
@@ -684,6 +686,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 498a67d887ab5194f98b3ce8ddecbc0e, type: 2}
   - {fileID: 2100000, guid: 37088b6285b37b944a54f1b5557f89df, type: 2}
   - {fileID: 2100000, guid: 728e8c1cab2e78942ae81261b157ceb1, type: 2}
+  currentCoords: []
+  previewCoords: []
   resetButton: {fileID: 1432428619}
   scoreText: {fileID: 1620862335}
   highScoreText: {fileID: 754414521}
