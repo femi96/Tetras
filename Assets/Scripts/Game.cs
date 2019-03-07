@@ -26,7 +26,7 @@ public class Game : MonoBehaviour {
   public float level = 0;
   private float fallTime = 0;
 
-  private bool inGame = false;
+  public bool inGame = false;
 
   private int score = 0;
   private int highScore = 0;
@@ -35,7 +35,7 @@ public class Game : MonoBehaviour {
   public Material baseMat;
   public Material[] mats;
 
-  private Vector3Int[] currentCoords;
+  public Vector3Int[] currentCoords;
   private GameObject[] currentBlocks;
 
   private GameObject[, ,] gridBlocks;
@@ -207,9 +207,9 @@ public class Game : MonoBehaviour {
   }
 
   private void CheckInput() {
-    // TODO: Camera controls
-    // TODO: Vary control based oncamera direction
-    // TODO: Add preview and slam
+    // TODO MVP: Camera controls
+    // TODO MVP: Vary control based oncamera direction
+    // TODO MVP: Add preview and slam
 
     if (Input.GetKeyDown(KeyCode.A)) {
       MoveBlock(1, 0, 0);
