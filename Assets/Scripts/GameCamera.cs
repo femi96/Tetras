@@ -29,9 +29,9 @@ public class GameCamera : MonoBehaviour {
     x = angles.y;
     y = angles.x;
 
-    targetPos = Vector3.up * game.gridHeight / 5f;
-    distanceMax = Mathf.Max(Mathf.Max(game.gridSizeX, game.gridSizeZ), game.gridHeight);
-    distanceMin = Mathf.Min(Mathf.Min(game.gridSizeX, game.gridSizeZ), game.gridHeight);
+    targetPos = Vector3.up * game.gridHeight * 0.3f;
+    distanceMax = 1.5f * Mathf.Max(Mathf.Max(game.gridSizeX, game.gridSizeZ), game.gridHeight);
+    distanceMin = 0.8f * Mathf.Min(Mathf.Min(game.gridSizeX, game.gridSizeZ), game.gridHeight);
     distance = distanceMax;
   }
 
@@ -51,8 +51,6 @@ public class GameCamera : MonoBehaviour {
 
     // Don't move camera if in menu
     if (!CanMove()) return;
-
-    targetPos = (Vector3.up * game.gridHeight * 0.2f) + (game.currentCoords[0].y * Vector3.up * 0.1f);
 
     // Update camera position based on mouse movement
     x += Input.GetAxis("Mouse X") * xSpeed;
