@@ -32,6 +32,7 @@ public class GameCamera : MonoBehaviour {
     targetPos = Vector3.up * game.gridHeight / 5f;
     distanceMax = Mathf.Max(Mathf.Max(game.gridSizeX, game.gridSizeZ), game.gridHeight);
     distanceMin = Mathf.Min(Mathf.Min(game.gridSizeX, game.gridSizeZ), game.gridHeight);
+    distance = distanceMax;
   }
 
   void Update() {

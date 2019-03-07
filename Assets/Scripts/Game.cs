@@ -207,22 +207,42 @@ public class Game : MonoBehaviour {
   }
 
   private void CheckInput() {
-    // TODO MVP: Camera controls
     // TODO MVP: Vary control based oncamera direction
     // TODO MVP: Add preview and slam
+    // TODO MVP: Hold piece
 
-    if (Input.GetKeyDown(KeyCode.A)) {
-      MoveBlock(1, 0, 0);
-    } else if (Input.GetKeyDown(KeyCode.D)) {
-      MoveBlock(-1, 0, 0);
+    Vector3 camDirection = Camera.main.transform.forward;
+    camDirection.y = 0;
+    camDirection = camDirection.normalized;
+
+    int fx = 0;
+    int fz = 0;
+
+    if (Mathf.Abs(camDirection.x) > Mathf.Abs(camDirection.z))
+      fx = 1;
+    else
+      fz = 1;
+
+    if (camDirection.x < 0)
+      fx *= -1;
+
+    if (camDirection.z < 0)
+      fz *= -1;
+
+    if (Input.GetKeyDown(KeyCode.D)) {
+      MoveBlock(fz, 0, -fx);
+    } else if (Input.GetKeyDown(KeyCode.A)) {
+      MoveBlock(-fz, 0, fx);
     } else if (Input.GetKeyDown(KeyCode.W)) {
-      MoveBlock(0, 0, 1);
+      MoveBlock(fx, 0, fz);
     } else if (Input.GetKeyDown(KeyCode.S)) {
-      MoveBlock(0, 0, -1);
+      MoveBlock(-fx, 0, -fz);
     } else if (Input.GetKeyDown(KeyCode.Q)) {
-      RotateBlock(1, 0, 0);
+      RotateBlock(fz, 0, -fx);
     } else if (Input.GetKeyDown(KeyCode.E)) {
-      RotateBlock(0, 0, 1);
+      RotateBlock(-fx, 0, -fz);
+    } else if (Input.GetKeyDown(KeyCode.R)) {
+      RotateBlock(0, 1, 0);
     }
   }
 
