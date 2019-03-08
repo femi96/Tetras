@@ -50,15 +50,20 @@ public class Game : MonoBehaviour {
   private TetraType currentType = TetraType.None;
   private bool hasHeld;
 
+  public bool moveCamInMenu;
+
   [Header("UI")]
   public GameObject menuUI;
   public Text scoreText;
   public Text highScoreText;
   public Text heldText;
+  public Text cameraMoveText;
 
   void Start() {
     highScoreText.text = "" + highScore;
     scoreText.text = "" + score;
+    moveCamInMenu = true;
+    ToggleCamInMenu();
   }
 
   void Update() {
@@ -353,7 +358,7 @@ public class Game : MonoBehaviour {
     // TODO: Add other options
     // TODO: Build for web
     // TODO: Move camera on menu
-    // TODO: Add twitter link to UI
+    // TODO: Add music
     if (layers.Count > 0) {
       int bonus = 100;
 
@@ -488,5 +493,15 @@ public class Game : MonoBehaviour {
 #else
     Application.Quit();
 #endif
+  }
+
+  public void ToggleCamInMenu() {
+    moveCamInMenu = !moveCamInMenu;
+
+    if (moveCamInMenu) {
+      cameraMoveText.text = "Disable Menu Camera";
+    } else {
+      cameraMoveText.text = "Enable Menu Camera";
+    }
   }
 }

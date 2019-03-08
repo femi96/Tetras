@@ -38,7 +38,7 @@ public class GameCamera : MonoBehaviour {
   void Update() {
 
     // Lock cursor to screen on input
-    if (CanMove()) {
+    if (CanMove() && !game.moveCamInMenu) {
       Cursor.lockState = CursorLockMode.Locked;
       Cursor.visible = false;
     } else {
@@ -70,6 +70,6 @@ public class GameCamera : MonoBehaviour {
   }
 
   public bool CanMove() {
-    return game.inGame;
+    return game.inGame || game.moveCamInMenu;
   }
 }
