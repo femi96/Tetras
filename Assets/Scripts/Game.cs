@@ -290,7 +290,12 @@ public class Game : MonoBehaviour {
   }
 
   private void UpdateFall() {
-    fallTime += Time.deltaTime * fallSpeed;
+    float fastFall = 1.0f;
+
+    if (Input.GetKey(KeyCode.F))
+      fastFall = Mathf.Max(12.0f / fallSpeed, 1.0f);
+
+    fallTime += Time.deltaTime * fallSpeed * fastFall;
 
     if (fallTime > 1.0f) {
       fallTime -= 1.0f;
@@ -354,10 +359,10 @@ public class Game : MonoBehaviour {
     // TODO: Add comboing
     // TODO: Add levels
     // TODO: Add score bonus text
-    // TODO: Add style options
-    // TODO: Add other options
+    // TODO: Add style options for background and material
+    // TODO: Add game options for game board size
+    // TODO: Add user options for sound and rebinding controls
     // TODO: Build for web
-    // TODO: Move camera on menu
     // TODO: Add music
     if (layers.Count > 0) {
       int bonus = 100;
