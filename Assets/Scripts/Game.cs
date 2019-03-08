@@ -51,7 +51,7 @@ public class Game : MonoBehaviour {
   private bool hasHeld;
 
   [Header("UI")]
-  public GameObject resetButton;
+  public GameObject menuUI;
   public Text scoreText;
   public Text highScoreText;
   public Text heldText;
@@ -95,13 +95,13 @@ public class Game : MonoBehaviour {
     score = 0;
     inGame = true;
 
-    resetButton.SetActive(false);
+    menuUI.SetActive(false);
   }
 
   private void EndGame() {
     inGame = false;
 
-    resetButton.SetActive(true);
+    menuUI.SetActive(true);
   }
 
   private void LockTetraCube() {
@@ -245,8 +245,6 @@ public class Game : MonoBehaviour {
   }
 
   private void CheckInput() {
-    // TODO MVP: Hold piece
-
     Vector3 camDirection = Camera.main.transform.forward;
     camDirection.y = 0;
     camDirection = camDirection.normalized;
@@ -355,6 +353,7 @@ public class Game : MonoBehaviour {
     // TODO: Add other options
     // TODO: Build for web
     // TODO: Move camera on menu
+    // TODO: Add twitter link to UI
     if (layers.Count > 0) {
       int bonus = 100;
 
@@ -475,5 +474,19 @@ public class Game : MonoBehaviour {
 
       previewBlocks[i].transform.position = previewCoords[i] + gridOffset;
     }
+  }
+
+  public void OpenTwitter() {
+    Application.OpenURL("https://twitter.com/imef96");
+  }
+
+  public void QuitGame() {
+#if UNITY_EDITOR
+    UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_WEBPLAYER
+    Application.OpenURL(webplayerQuitURL);
+#else
+    Application.Quit();
+#endif
   }
 }
