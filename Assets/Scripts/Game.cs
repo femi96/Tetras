@@ -18,19 +18,25 @@ public enum TetraType {
 
 public class Game : MonoBehaviour {
 
+  [Header("Game Options")]
   public int gridSizeX = 4;
   public int gridSizeZ = 4;
   public int gridHeight = 20;
   private Vector3 gridOffset;
 
-  public float fallSpeed = 1;
-  public float level = 0;
-  private float fallTime = 0;
 
-  public bool inGame = false;
+  [Header("Progression")]
+  private int level = 0;
+  private int exp = 0;
+  private float fallTime = 0;
+  private int combo = 0;
 
   private int score = 0;
   private int highScore = 0;
+
+
+  [Header("References")]
+  public bool inGame = false;
 
   public GameObject cube;
   public GameObject previewCube;
@@ -52,18 +58,23 @@ public class Game : MonoBehaviour {
 
   public bool moveCamInMenu;
 
+
   [Header("UI")]
   public GameObject menuUI;
   public Text scoreText;
   public Text highScoreText;
   public Text heldText;
   public Text cameraMoveText;
+  public Text levelText;
+  public GameObject comboUI;
+  public Text comboText;
 
   void Start() {
     highScoreText.text = "" + highScore;
     scoreText.text = "" + score;
     moveCamInMenu = true;
     ToggleCamInMenu();
+    comboUI.SetActive(false);
   }
 
   void Update() {
@@ -101,12 +112,20 @@ public class Game : MonoBehaviour {
     inGame = true;
 
     menuUI.SetActive(false);
+
+    // Progression
+    level = 0;
+    exp = 0;
+    combo = 0;
+    UpdateLevelUI();
+    comboUI.SetActive(false);
   }
 
   private void EndGame() {
     inGame = false;
 
     menuUI.SetActive(true);
+    comboUI.SetActive(false);
   }
 
   private void LockTetraCube() {
@@ -291,6 +310,7 @@ public class Game : MonoBehaviour {
 
   private void UpdateFall() {
     float fastFall = 1.0f;
+    float fallSpeed = 1.0f + 0.05f * level;
 
     if (Input.GetKey(KeyCode.F))
       fastFall = Mathf.Max(12.0f / fallSpeed, 1.0f);
@@ -357,28 +377,42 @@ public class Game : MonoBehaviour {
 
     // Score
     // TODO: Add comboing
-    // TODO: Add levels
     // TODO: Add score bonus text
     // TODO: Add style options for background and material
     // TODO: Add game options for game board size
     // TODO: Add user options for sound and rebinding controls
     // TODO: Build for web
-    // TODO: Add music
+    // TODO: Add music & sound effects
+    // TODO: Add controls to the UI
     if (layers.Count > 0) {
-      int bonus = 100;
+      combo += 1;
+      int bonus = 100 * combo;
 
       for (int l = 1; l < layers.Count; l++) {
         bonus *= 3;
       }
 
+      bonus = bonus + (bonus * level / 2);
+
       score += bonus;
+      exp += layers.Count;
+
+      if (exp >= 3 && level < 50) {
+        exp -= 3;
+        level += 1;
+        UpdateLevelUI();
+      }
 
       if (highScore < score)
         highScore = score;
+    } else {
+      combo = 0;
     }
 
     highScoreText.text = "" + highScore;
     scoreText.text = "" + score;
+    comboText.text = "" + combo;
+    comboUI.SetActive(combo > 1);
   }
 
   private void SlamBlock() {
@@ -484,6 +518,11 @@ public class Game : MonoBehaviour {
 
       previewBlocks[i].transform.position = previewCoords[i] + gridOffset;
     }
+  }
+
+  private void UpdateLevelUI() {
+
+    levelText.text = "" + level;
   }
 
   public void OpenTwitter() {
