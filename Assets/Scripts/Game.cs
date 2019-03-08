@@ -16,6 +16,16 @@ public enum TetraType {
   None,
 }
 
+// TODO: Add effects to clear lines
+// TODO: Add score bonus text
+// TODO: Add style options for background and material
+// TODO: Add game options for game board size
+// TODO: Add user options for sound and rebinding controls
+// TODO: Build for web
+// TODO: Add music & sound effects
+// TODO: Add controls to the UI
+// TODO: Add better hold UI
+
 public class Game : MonoBehaviour {
 
   [Header("Game Options")]
@@ -330,7 +340,6 @@ public class Game : MonoBehaviour {
   }
 
   private void ClearLines() {
-    // TODO: Add effects
     // Remove cubes
     List<int> layers = new List<int>();
 
@@ -376,14 +385,6 @@ public class Game : MonoBehaviour {
     }
 
     // Score
-    // TODO: Add comboing
-    // TODO: Add score bonus text
-    // TODO: Add style options for background and material
-    // TODO: Add game options for game board size
-    // TODO: Add user options for sound and rebinding controls
-    // TODO: Build for web
-    // TODO: Add music & sound effects
-    // TODO: Add controls to the UI
     if (layers.Count > 0) {
       combo += 1;
       int bonus = 100 * combo;
