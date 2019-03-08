@@ -13,6 +13,7 @@ public enum TetraType {
   TL,
   TR,
   A,
+  None,
 }
 
 public class Game : MonoBehaviour {
@@ -45,11 +46,15 @@ public class Game : MonoBehaviour {
   private GameObject[, ,] gridBlocks;
 
   private List<TetraType> tetraCubeQueue;
+  private TetraType heldType = TetraType.None;
+  private TetraType currentType = TetraType.None;
+  private bool hasHeld;
 
   [Header("UI")]
   public GameObject resetButton;
   public Text scoreText;
   public Text highScoreText;
+  public Text heldText;
 
   void Start() {
     highScoreText.text = "" + highScore;
@@ -75,6 +80,7 @@ public class Game : MonoBehaviour {
     previewBlocks = new GameObject[4];
     gridOffset = -0.5f * new Vector3(gridSizeX, 0, gridSizeZ) + new Vector3(0.5f, 0, 0.5f);
     tetraCubeQueue = new List<TetraType>();
+    heldType = TetraType.None;
 
 
     for (int i = 0; i < gridSizeX; i++) {
@@ -85,7 +91,7 @@ public class Game : MonoBehaviour {
       }
     }
 
-    NewTetraCube();
+    NewTetraCube(false);
     score = 0;
     inGame = true;
 
@@ -108,7 +114,7 @@ public class Game : MonoBehaviour {
     }
   }
 
-  private void NewTetraCube() {
+  private void NewTetraCube(bool fromHeld) {
     if (tetraCubeQueue.Count == 0) {
       // Populate
       tetraCubeQueue = new List<TetraType>() {
@@ -130,14 +136,37 @@ public class Game : MonoBehaviour {
       }
     }
 
-    TetraType type = tetraCubeQueue[0];
-    tetraCubeQueue.RemoveAt(0);
+    // if from held tetraCube
+    if (fromHeld) {
+      if (hasHeld)
+        return;
+
+      TetraType temp = currentType;
+      currentType = heldType;
+      heldType = temp;
+
+      foreach (GameObject block in currentBlocks) {
+        Destroy(block);
+      }
+
+      hasHeld = true;
+    }
+
+    heldText.text = heldType.ToString();
+
+    // Pop from queue
+    if (!fromHeld || currentType == TetraType.None) {
+      currentType = tetraCubeQueue[0];
+      tetraCubeQueue.RemoveAt(0);
+      hasHeld = false;
+    }
+
     int l = gridHeight - 1;
-    Material m = mats[(int)type];
+    Material m = mats[(int)currentType];
     int cx = gridSizeX / 2;
     int cz = gridSizeZ / 2;
 
-    switch (type) {
+    switch (currentType) {
     case TetraType.I:
       currentCoords[2] = new Vector3Int(cx - 2, l, cz);
       currentCoords[1] = new Vector3Int(cx - 1, l, cz);
@@ -211,6 +240,7 @@ public class Game : MonoBehaviour {
       currentBlocks[i].GetComponent<Renderer>().material = m;
     }
 
+    currentBlocks[0].GetComponent<Renderer>().material = baseMat;
     UpdatePreview();
   }
 
@@ -251,6 +281,8 @@ public class Game : MonoBehaviour {
       RotateBlock(0, 1, 0);
     } else if (Input.GetKeyDown(KeyCode.Space)) {
       SlamBlock();
+    } else if (Input.GetKeyDown(KeyCode.C)) {
+      NewTetraCube(true);
     }
   }
 
@@ -263,7 +295,7 @@ public class Game : MonoBehaviour {
 
       if (!fall) {
         LockTetraCube();
-        NewTetraCube();
+        NewTetraCube(false);
         ClearLines();
       }
     }
@@ -317,6 +349,12 @@ public class Game : MonoBehaviour {
 
     // Score
     // TODO: Add comboing
+    // TODO: Add levels
+    // TODO: Add score bonus text
+    // TODO: Add style options
+    // TODO: Add other options
+    // TODO: Build for web
+    // TODO: Move camera on menu
     if (layers.Count > 0) {
       int bonus = 100;
 
