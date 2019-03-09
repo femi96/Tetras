@@ -72,6 +72,7 @@ public class Game : MonoBehaviour {
 
   [Header("UI")]
   public GameObject menuUI;
+  public GameObject gameUI;
   public Text scoreText;
   public Text highScoreText;
   public Text heldText;
@@ -128,6 +129,7 @@ public class Game : MonoBehaviour {
     inGame = true;
 
     menuUI.SetActive(false);
+    gameUI.SetActive(true);
 
     // Progression
     level = 0;
@@ -141,6 +143,7 @@ public class Game : MonoBehaviour {
     inGame = false;
 
     menuUI.SetActive(true);
+    gameUI.SetActive(false);
     comboUI.SetActive(false);
   }
 
