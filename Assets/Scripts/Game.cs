@@ -283,7 +283,7 @@ public class Game : MonoBehaviour {
       currentBlocks[i].GetComponent<Renderer>().material = m;
     }
 
-    currentBlocks[0].GetComponent<Renderer>().material = baseMat;
+    currentBlocks[0].GetComponent<Renderer>().material.SetColor("_Color", new Color(0.25f, 0.25f, 0.25f));
     UpdatePreview();
   }
 
