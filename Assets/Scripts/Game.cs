@@ -394,7 +394,7 @@ public class Game : MonoBehaviour {
     // Score
     if (layers.Count > 0) {
       combo += 1;
-      int bonus = 100 * combo;
+      int bonus = 100 * combo * gridSizeX * gridSizeZ / 16;
 
       for (int l = 1; l < layers.Count; l++) {
         bonus *= 3;
@@ -403,10 +403,10 @@ public class Game : MonoBehaviour {
       bonus = bonus + (bonus * level / 2);
 
       score += bonus;
-      exp += layers.Count;
+      exp += layers.Count * gridSizeX * gridSizeZ;
 
-      if (exp >= 3 && level < 50) {
-        exp -= 3;
+      if (exp >= 40 && level < 50) {
+        exp -= 40;
         level += 1;
         UpdateLevelUI();
       }
