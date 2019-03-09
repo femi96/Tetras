@@ -16,15 +16,17 @@ public enum TetraType {
   None,
 }
 
+// TODO: Make score and exp scale with board size
 // TODO: Add effects to clear lines
 // TODO: Add score bonus text
 // TODO: Add style options for background and material
-// TODO: Add game options for game board size
 // TODO: Add user options for sound and rebinding controls
 // TODO: Build for web
 // TODO: Add music & sound effects
 // TODO: Add controls to the UI
 // TODO: Add better hold UI
+// TODO: Add queue UI
+// TODO: Add camera spin on main menu
 
 public class Game : MonoBehaviour {
 
@@ -78,6 +80,11 @@ public class Game : MonoBehaviour {
   public Text levelText;
   public GameObject comboUI;
   public Text comboText;
+  public GameObject optionsUI;
+
+  public Text gridTextX;
+  public Text gridTextY;
+  public Text gridTextZ;
 
   void Start() {
     highScoreText.text = "" + highScore;
@@ -547,6 +554,36 @@ public class Game : MonoBehaviour {
       cameraMoveText.text = "Disable Menu Camera";
     } else {
       cameraMoveText.text = "Enable Menu Camera";
+    }
+  }
+
+  public void ToggleOptionsUI() {
+
+    // Options
+    gridTextX.text = "" + gridSizeX;
+    gridTextZ.text = "" + gridSizeZ;
+    gridTextY.text = "" + gridHeight;
+
+    optionsUI.SetActive(!optionsUI.activeSelf);
+  }
+
+  public void ChangeGridSize(int mode) {
+    // I think this is the worst function I have ever written
+    int delta = (mode % 2) - (1 - (mode % 2));
+
+    if (mode / 2 == 0) {
+      gridSizeX = Mathf.Max(gridSizeX + delta, 4);
+      gridTextX.text = "" + gridSizeX;
+    }
+
+    if (mode / 2 == 1) {
+      gridSizeZ = Mathf.Max(gridSizeZ + delta, 4);
+      gridTextZ.text = "" + gridSizeZ;
+    }
+
+    if (mode / 2 == 2) {
+      gridHeight = Mathf.Max(gridHeight + delta, 8);
+      gridTextY.text = "" + gridHeight;
     }
   }
 }
