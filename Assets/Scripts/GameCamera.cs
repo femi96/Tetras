@@ -35,7 +35,72 @@ public class GameCamera : MonoBehaviour {
     distance = distanceMax;
   }
 
+  private float cr = 95;
+  private float cg = 205;
+  private float cb = 205;
+  private float cLow = 95;
+  private float cHigh = 205;
+  private float rgbChange = 0;
+  public float cRate = 1f;
+
   void Update() {
+
+    // Color
+    if (rgbChange == 1) {
+      cr += cRate * Time.deltaTime;
+
+      if (cr >= cHigh) {
+        cr = cHigh;
+        rgbChange = 2;
+      }
+    }
+
+    if (rgbChange == 0) {
+      cg -= cRate * Time.deltaTime;
+
+      if (cg <= cLow) {
+        cg = cLow;
+        rgbChange = 1;
+      }
+    }
+
+    if (rgbChange == 3) {
+      cg += cRate * Time.deltaTime;
+
+      if (cg >= cHigh) {
+        cg = cHigh;
+        rgbChange = 4;
+      }
+    }
+
+    if (rgbChange == 2) {
+      cb -= cRate * Time.deltaTime;
+
+      if (cb <= cLow) {
+        cb = cLow;
+        rgbChange = 3;
+      }
+    }
+
+    if (rgbChange == 5) {
+      cb += cRate * Time.deltaTime;
+
+      if (cb >= cHigh) {
+        cb = cHigh;
+        rgbChange = 0;
+      }
+    }
+
+    if (rgbChange == 4) {
+      cr -= cRate * Time.deltaTime;
+
+      if (cr <= cLow) {
+        cr = cLow;
+        rgbChange = 5;
+      }
+    }
+
+    Camera.main.backgroundColor = new Color(cr / 256f, cg / 256f, cb / 256f);
 
     // Lock cursor to screen on input
     if (CanMove() && !game.moveCamInMenu) {

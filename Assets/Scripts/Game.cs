@@ -16,7 +16,6 @@ public enum TetraType {
   None,
 }
 
-// TODO: Make score and exp scale with board size
 // TODO: Add effects to clear lines
 // TODO: Add score bonus text
 // TODO: Add style options for background and material
