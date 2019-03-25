@@ -26,6 +26,9 @@ public enum TetraType {
 // TODO: Add better hold UI
 // TODO: Add queue UI
 // TODO: Add camera spin on main menu
+// TODO: Fix controls UI for fast fall
+// TODO: Increase level rate
+// TODO: Add marking for top row
 
 public class Game : MonoBehaviour {
 
