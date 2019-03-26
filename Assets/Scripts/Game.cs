@@ -20,15 +20,15 @@ public enum TetraType {
 // TODO: Add score bonus text
 // TODO: Add style options for background and material
 // TODO: Add user options for sound and rebinding controls
-// TODO: Build for web
+// TODO: Build for personal website
 // TODO: Add music & sound effects
 // TODO: Add controls to the UI
 // TODO: Add better hold UI
 // TODO: Add queue UI
 // TODO: Add camera spin on main menu
 // TODO: Fix controls UI for fast fall
-// TODO: Increase level rate
 // TODO: Add marking for top row
+// TODO: Make level name and color based on level
 
 public class Game : MonoBehaviour {
 
@@ -136,7 +136,7 @@ public class Game : MonoBehaviour {
 
     // Progression
     level = 0;
-    exp = 0;
+    exp = -16;
     combo = 0;
     UpdateLevelUI();
     comboUI.SetActive(false);
@@ -409,11 +409,13 @@ public class Game : MonoBehaviour {
 
       score += bonus;
       exp += layers.Count * gridSizeX * gridSizeZ;
+      int expCap = 16 + Mathf.RoundToInt(level / 3.125f);
 
-      if (exp >= 40 && level < 50) {
-        exp -= 40;
+      while (exp >= expCap && level < 50) {
+        exp -= expCap;
         level += 1;
         UpdateLevelUI();
+        expCap = 16 + Mathf.RoundToInt(level / 3.125f);
       }
 
       if (highScore < score)
