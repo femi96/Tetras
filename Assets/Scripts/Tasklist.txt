@@ -1,0 +1,27 @@
+
+
+Priority 1 : High
+- Add multiple option screens
+- Add user options for sound and rebinding controls
+
+Priority 2
+- Add music & sound effects
+- Add controls to the UI
+- Add better hold UI
+- Add queue UI
+- Add marking for top row
+
+Priority 3
+- Make level name and color based on level
+- Add camera spin on main menu
+- Fix controls UI for fast fall
+
+Priority 4
+- Add style options for background and material
+- Build for personal website
+
+Priority 5 : Low
+- Add score bonus text
+- Add effects to clear lines
+
+Unranked

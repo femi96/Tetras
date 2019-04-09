@@ -16,20 +16,6 @@ public enum TetraType {
   None,
 }
 
-// TODO: Add effects to clear lines
-// TODO: Add score bonus text
-// TODO: Add style options for background and material
-// TODO: Add user options for sound and rebinding controls
-// TODO: Build for personal website
-// TODO: Add music & sound effects
-// TODO: Add controls to the UI
-// TODO: Add better hold UI
-// TODO: Add queue UI
-// TODO: Add camera spin on main menu
-// TODO: Fix controls UI for fast fall
-// TODO: Add marking for top row
-// TODO: Make level name and color based on level
-
 public class Game : MonoBehaviour {
 
   [Header("Game Options")]
