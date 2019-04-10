@@ -11,8 +11,6 @@ Priority 1 : High
 - Add sound options
 	- effect volume
 	- music volume
-- Add game options
-	- fall speed min/max
 - Add options saving to file/cache
 
 Priority 2
