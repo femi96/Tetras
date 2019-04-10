@@ -1,7 +1,19 @@
 
 
 Priority 1 : High
-- Add user options for sound and rebinding controls
+- Add style options
+	- material selection
+	- color selection
+	- for all tetracubes, preview, and base
+- Add user options
+	- rebinding controls
+	- sensitivity
+- Add sound options
+	- effect volume
+	- music volume
+- Add game options
+	- fall speed min/max
+- Add options saving to file/cache
 
 Priority 2
 - Add music & sound effects

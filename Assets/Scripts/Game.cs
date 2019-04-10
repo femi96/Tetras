@@ -23,7 +23,8 @@ public class Game : MonoBehaviour {
   public int gridSizeZ = 4;
   public int gridHeight = 20;
   private Vector3 gridOffset;
-
+  private float fallSpeedMultiplier = 1f;
+  private float fallSpeedCap = 12f;
 
   [Header("Progression")]
   private int level = 0;
@@ -75,6 +76,9 @@ public class Game : MonoBehaviour {
   public Text gridTextX;
   public Text gridTextY;
   public Text gridTextZ;
+
+  public Text optGFSMText;
+  public Text optGFSCText;
 
   void Start() {
     highScoreText.text = "" + highScore;
@@ -318,13 +322,18 @@ public class Game : MonoBehaviour {
   }
 
   private void UpdateFall() {
-    float fastFall = 1.0f;
     float fallSpeed = 1.0f + 0.05f * level;
+    fallSpeed = fallSpeed * fallSpeedMultiplier;
 
-    if (Input.GetKey(KeyCode.F))
-      fastFall = Mathf.Max(12.0f / fallSpeed, 1.0f);
+    if (Input.GetKey(KeyCode.F)) {
+      if (fallSpeed < fallSpeedCap)
+        fallSpeed = fallSpeedCap;
+    }
 
-    fallTime += Time.deltaTime * fallSpeed * fastFall;
+    if (fallSpeed > fallSpeedCap)
+      fallSpeed = fallSpeedCap;
+
+    fallTime += Time.deltaTime * fallSpeed;
 
     if (fallTime > 1.0f) {
       fallTime -= 1.0f;
@@ -558,6 +567,9 @@ public class Game : MonoBehaviour {
     gridTextZ.text = "" + gridSizeZ;
     gridTextY.text = "" + gridHeight;
 
+    optGFSMText.text = "" + fallSpeedMultiplier;
+    optGFSCText.text = "" + fallSpeedCap;
+
     optionsUI.SetActive(!optionsUI.activeSelf);
     menuUI.SetActive(!optionsUI.activeSelf);
 
@@ -602,8 +614,41 @@ public class Game : MonoBehaviour {
     }
 
     if (mode / 2 == 2) {
+      gridSizeX = 4;
       gridHeight = Mathf.Max(gridHeight + delta, 8);
       gridTextY.text = "" + gridHeight;
     }
+  }
+
+  public void ChangeFallSpeed(int mode) {
+    int delta = (mode % 2) - (1 - (mode % 2));
+
+    // Multiplier
+    if (mode / 2 == 0) {
+      fallSpeedMultiplier += delta * 0.05f;
+      fallSpeedMultiplier = Mathf.Max(fallSpeedMultiplier, 0);
+      optGFSMText.text = (Mathf.RoundToInt(100 * fallSpeedMultiplier) / 100f).ToString("N2");
+    }
+
+    // Cap
+    if (mode / 2 == 1) {
+      fallSpeedCap += delta * 0.2f;
+      fallSpeedCap = Mathf.Max(fallSpeedCap, 0);
+      optGFSCText.text = (Mathf.RoundToInt(10 * fallSpeedCap) / 10f).ToString("N1");
+    }
+  }
+
+  public void ResetGameOptions() {
+    gridSizeX = 4;
+    gridSizeZ = 4;
+    gridHeight = 20;
+    fallSpeedMultiplier = 1f;
+    fallSpeedCap = 12f;
+
+    gridTextX.text = "" + gridSizeX;
+    gridTextZ.text = "" + gridSizeZ;
+    gridTextY.text = "" + gridHeight;
+    optGFSMText.text = (Mathf.RoundToInt(100 * fallSpeedMultiplier) / 100f).ToString("N2");
+    optGFSCText.text = (Mathf.RoundToInt(10 * fallSpeedCap) / 10f).ToString("N1");
   }
 }
