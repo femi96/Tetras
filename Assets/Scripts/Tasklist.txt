@@ -1,7 +1,6 @@
 
 
 Priority 1 : High
-- Add multiple option screens
 - Add user options for sound and rebinding controls
 
 Priority 2
@@ -15,12 +14,14 @@ Priority 3
 - Make level name and color based on level
 - Add camera spin on main menu
 - Fix controls UI for fast fall
+- Keyboard control for menus
 
 Priority 4
 - Add style options for background and material
 - Build for personal website
 
 Priority 5 : Low
+- Add colors based on levels
 - Add score bonus text
 - Add effects to clear lines
 

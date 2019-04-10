@@ -70,6 +70,7 @@ public class Game : MonoBehaviour {
   public GameObject comboUI;
   public Text comboText;
   public GameObject optionsUI;
+  public GameObject[] optionsMenusUI;
 
   public Text gridTextX;
   public Text gridTextY;
@@ -558,6 +559,32 @@ public class Game : MonoBehaviour {
     gridTextY.text = "" + gridHeight;
 
     optionsUI.SetActive(!optionsUI.activeSelf);
+    menuUI.SetActive(!optionsUI.activeSelf);
+
+    for (int i = 0; i < optionsMenusUI.Length; i++) {
+      optionsMenusUI[i].SetActive(0 == i);
+    }
+  }
+
+  public void ChangeOptionsMenu(int dir) {
+    int activeIndex = 0;
+
+    for (int i = 0; i < optionsMenusUI.Length; i++) {
+      if (optionsMenusUI[i].activeSelf)
+        activeIndex = i;
+    }
+
+    activeIndex += dir;
+
+    if (activeIndex < 0)
+      activeIndex += optionsMenusUI.Length;
+
+    if (activeIndex >= optionsMenusUI.Length)
+      activeIndex -= optionsMenusUI.Length;
+
+    for (int i = 0; i < optionsMenusUI.Length; i++) {
+      optionsMenusUI[i].SetActive(activeIndex == i);
+    }
   }
 
   public void ChangeGridSize(int mode) {
