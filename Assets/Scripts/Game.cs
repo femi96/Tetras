@@ -26,6 +26,18 @@ public class Game : MonoBehaviour {
   private float fallSpeedMultiplier = 1f;
   private float fallSpeedCap = 12f;
 
+  [Header("Style Options")]
+  public Color[] colorOpts;
+  public Texture[] textureOpts;
+
+  private int colorPreview = 4;
+  private int colorBase = 1;
+  private int colorPivot = 0;
+  private int[] colors = new int[8] { 8, 12, 13, 17, 14, 10, 16, 7 };
+  public int textureBase = 0;
+  private int texturePreview = 1;
+  private int[] textures = new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
+
   [Header("Progression")]
   private int level = 0;
   private int exp = 0;
@@ -41,8 +53,10 @@ public class Game : MonoBehaviour {
 
   public GameObject cube;
   public GameObject previewCube;
-  public Material baseMat;
-  public Material[] mats;
+  public Material matBase;
+  public Material matPreview;
+  public Material matNormal;
+  private Material[] mats = new Material[8];
 
   public Vector3Int[] currentCoords;
   private GameObject[] currentBlocks;
@@ -80,12 +94,19 @@ public class Game : MonoBehaviour {
   public Text optGFSMText;
   public Text optGFSCText;
 
+  public Image[] tetraColorUI;
+  public Image[] tetraTextureUI;
+
   void Start() {
     highScoreText.text = "" + highScore;
     scoreText.text = "" + score;
     moveCamInMenu = true;
     ToggleCamInMenu();
     comboUI.SetActive(false);
+
+    for (int i = 0; i < 8; i++) {
+      mats[i] = new Material(matNormal);
+    }
   }
 
   void Update() {
@@ -109,12 +130,13 @@ public class Game : MonoBehaviour {
     tetraCubeQueue = new List<TetraType>();
     heldType = TetraType.None;
 
+    UpdateMaterial();
 
     for (int i = 0; i < gridSizeX; i++) {
       for (int j = 0; j < gridSizeZ; j++) {
         GameObject go = Instantiate(cube, transform);
         go.transform.position = new Vector3(i, -1, j) + gridOffset;
-        go.GetComponent<Renderer>().material = baseMat;
+        go.GetComponent<Renderer>().material = matBase;
       }
     }
 
@@ -277,7 +299,7 @@ public class Game : MonoBehaviour {
       currentBlocks[i].GetComponent<Renderer>().material = m;
     }
 
-    currentBlocks[0].GetComponent<Renderer>().material.SetColor("_Color", new Color(0.25f, 0.25f, 0.25f));
+    currentBlocks[0].GetComponent<Renderer>().material.SetColor("_Color", colorOpts[colorPivot]);
     UpdatePreview();
   }
 
@@ -501,6 +523,20 @@ public class Game : MonoBehaviour {
     return true;
   }
 
+  private void UpdateMaterial() {
+    matBase.SetTexture("_MainTex", textureOpts[textureBase]);
+    matBase.SetColor("_Color", colorOpts[colorBase]);
+    matPreview.SetTexture("_MainTex", textureOpts[texturePreview]);
+    Color prevColor = colorOpts[colorPreview];
+    prevColor.a = 0.5f;
+    matPreview.SetColor("_Color", prevColor);
+
+    for (int i = 0; i < 8; i++) {
+      mats[i].SetTexture("_MainTex", textureOpts[textures[i]]);
+      mats[i].SetColor("_Color", colorOpts[colors[i]]);
+    }
+  }
+
   private void UpdatePreview() {
 
     for (int i = 0; i < previewCoords.Length; i++) {
@@ -524,8 +560,10 @@ public class Game : MonoBehaviour {
     }
 
     for (int i = 0; i < previewBlocks.Length; i++) {
-      if (previewBlocks[i] == null)
+      if (previewBlocks[i] == null) {
         previewBlocks[i] = Instantiate(previewCube, transform);
+        previewBlocks[i].GetComponent<Renderer>().material = matPreview;
+      }
 
       previewBlocks[i].transform.position = previewCoords[i] + gridOffset;
     }
@@ -576,6 +614,8 @@ public class Game : MonoBehaviour {
     for (int i = 0; i < optionsMenusUI.Length; i++) {
       optionsMenusUI[i].SetActive(0 == i);
     }
+
+    UpdateStyleImages();
   }
 
   public void ChangeOptionsMenu(int dir) {
@@ -650,5 +690,87 @@ public class Game : MonoBehaviour {
     gridTextY.text = "" + gridHeight;
     optGFSMText.text = (Mathf.RoundToInt(100 * fallSpeedMultiplier) / 100f).ToString("N2");
     optGFSCText.text = (Mathf.RoundToInt(10 * fallSpeedCap) / 10f).ToString("N1");
+  }
+
+  public void ChangeTetraColor(int mode) {
+    int delta = (mode % 2) - (1 - (mode % 2));
+    delta = -delta;
+
+    // Base
+    if (mode / 2 == 0) {
+      colorBase = (colorBase + delta) % colorOpts.Length;
+
+      if (colorBase < 0)
+        colorBase += colorOpts.Length;
+    }
+
+    // Preview
+    if (mode / 2 == 1) {
+      colorPreview = (colorPreview + delta) % colorOpts.Length;
+
+      if (colorPreview < 0)
+        colorPreview += colorOpts.Length;
+    }
+
+    // Tetras
+    if (mode / 2 >= 2) {
+      int ind = (mode / 2) - 2;
+      colors[ind] = (colors[ind] + delta) % colorOpts.Length;
+
+      if (colors[ind] < 0)
+        colors[ind] += colorOpts.Length;
+    }
+
+    UpdateStyleImages();
+  }
+
+  public void ChangeTetraTexture(int mode) {
+    int delta = (mode % 2) - (1 - (mode % 2));
+    delta = -delta;
+
+    // Base
+    if (mode / 2 == 0) {
+      textureBase = (textureBase + delta) % textureOpts.Length;
+
+      if (textureBase < 0)
+        textureBase += textureOpts.Length;
+    }
+
+    // Preview
+    if (mode / 2 == 1) {
+      texturePreview = (texturePreview + delta) % textureOpts.Length;
+
+      if (texturePreview < 0)
+        texturePreview += textureOpts.Length;
+    }
+
+    // Tetras
+    if (mode / 2 >= 2) {
+      int ind = (mode / 2) - 2;
+      textures[ind] = (textures[ind] + delta) % textureOpts.Length;
+
+      if (textures[ind] < 0)
+        textures[ind] += textureOpts.Length;
+    }
+
+    UpdateStyleImages();
+  }
+
+  public void UpdateStyleImages() {
+
+    tetraColorUI[0].color = colorOpts[colorBase];
+    tetraColorUI[1].color = colorOpts[colorPreview];
+
+    for (int i = 0; i < colors.Length; i++) {
+      tetraColorUI[i + 2].color = colorOpts[colors[i]];
+    }
+
+    Vector2 pivot = new Vector2(0.5f, 0.5f);
+    tetraTextureUI[0].sprite = Sprite.Create((Texture2D)textureOpts[textureBase], new Rect(0, 0, textureOpts[textureBase].width, textureOpts[textureBase].height), pivot);
+    tetraTextureUI[1].sprite = Sprite.Create((Texture2D)textureOpts[texturePreview], new Rect(0, 0, textureOpts[texturePreview].width, textureOpts[texturePreview].height), pivot);
+
+    for (int i = 0; i < textures.Length; i++) {
+      tetraTextureUI[i + 2].sprite = Sprite.Create((Texture2D)textureOpts[textures[i]], new Rect(0, 0, textureOpts[textures[i]].width, textureOpts[textures[i]].height), pivot);
+    }
   }
 }
