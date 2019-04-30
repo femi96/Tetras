@@ -99,7 +99,7 @@ public class Game : MonoBehaviour {
   void Start() {
     highScoreText.text = "" + highScore;
     scoreText.text = "" + score;
-    moveCamInMenu = true;
+    moveCamInMenu = false;
     ToggleCamInMenu();
     comboUI.SetActive(false);
 
@@ -605,8 +605,8 @@ public class Game : MonoBehaviour {
     gridTextZ.text = "" + gridSizeZ;
     gridTextY.text = "" + gridHeight;
 
-    optGFSMText.text = "" + fallSpeedMultiplier;
-    optGFSCText.text = "" + fallSpeedCap;
+    optGFSMText.text = (Mathf.RoundToInt(100 * fallSpeedMultiplier) / 100f).ToString("N2");
+    optGFSCText.text = (Mathf.RoundToInt(10 * fallSpeedCap) / 10f).ToString("N1");
 
     optionsUI.SetActive(!optionsUI.activeSelf);
     menuUI.SetActive(!optionsUI.activeSelf);

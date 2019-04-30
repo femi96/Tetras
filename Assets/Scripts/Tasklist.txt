@@ -1,14 +1,5 @@
 
 
-Priority 1 : High
-- Add user options
-	- rebinding controls
-	- sensitivity
-- Add sound options
-	- effect volume
-	- music volume
-- Add options saving to file/cache
-
 Priority 2
 - Add music & sound effects
 - Add controls to the UI
@@ -18,7 +9,7 @@ Priority 2
 
 Priority 3
 - Make level name and color based on level
-- Add camera spin on main menu
+- Make color effect light
 - Fix controls UI for fast fall
 - Keyboard control for menus
 

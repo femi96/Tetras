@@ -103,7 +103,7 @@ public class GameCamera : MonoBehaviour {
     Camera.main.backgroundColor = new Color(cr / 256f, cg / 256f, cb / 256f);
 
     // Lock cursor to screen on input
-    if (CanMove() && !game.moveCamInMenu) {
+    if (CanPlayerMove()) {
       Cursor.lockState = CursorLockMode.Locked;
       Cursor.visible = false;
     } else {
@@ -115,26 +115,43 @@ public class GameCamera : MonoBehaviour {
   void LateUpdate() {
 
     // Don't move camera if in menu
-    if (!CanMove()) return;
+    if (CanRotateMove()) {
+
+      x += Time.deltaTime * xSpeed;
+      x = (x + 360f) % 360f;
+      Quaternion rotation = Quaternion.Euler(y, x, 0);
+      Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
+      Vector3 position = rotation * negDistance;
+
+      transform.rotation = rotation;
+      transform.position = position + targetPos;
+
+    }
 
     // Update camera position based on mouse movement
-    x += Input.GetAxis("Mouse X") * xSpeed;
-    y -= Input.GetAxis("Mouse Y") * ySpeed;
-    x = (x + 360f) % 360f;
-    y = Mathf.Clamp(y, yMinLimit, yMaxLimit);
+    if (CanPlayerMove()) {
+      x += Input.GetAxis("Mouse X") * xSpeed;
+      y -= Input.GetAxis("Mouse Y") * ySpeed;
+      x = (x + 360f) % 360f;
+      y = Mathf.Clamp(y, yMinLimit, yMaxLimit);
 
-    Quaternion rotation = Quaternion.Euler(y, x, 0);
+      Quaternion rotation = Quaternion.Euler(y, x, 0);
 
-    distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel") * distanceSpeed, distanceMin, distanceMax);
+      distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel") * distanceSpeed, distanceMin, distanceMax);
 
-    Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
-    Vector3 position = rotation * negDistance;
+      Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
+      Vector3 position = rotation * negDistance;
 
-    transform.rotation = rotation;
-    transform.position = position + targetPos;
+      transform.rotation = rotation;
+      transform.position = position + targetPos;
+    }
   }
 
-  public bool CanMove() {
-    return game.inGame || game.moveCamInMenu;
+  public bool CanPlayerMove() {
+    return game.inGame;
+  }
+
+  public bool CanRotateMove() {
+    return game.moveCamInMenu && !game.inGame;
   }
 }
