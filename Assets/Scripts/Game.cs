@@ -523,6 +523,30 @@ public class Game : MonoBehaviour {
     return true;
   }
 
+  //
+  // Level Code
+  //
+
+  [Header("Level Details")]
+  public Color[] camColors;
+  private int colorInd = 0;
+
+  public Color GetNextColor() {
+
+    Color nextColor = camColors[colorInd];
+    colorInd += 1;
+    colorInd = colorInd % camColors.Length;
+    return nextColor;
+  }
+
+  public float GetColorRate() {
+    return 1.0f;
+  }
+
+  //
+  // UI Code
+  //
+
   private void UpdateMaterial() {
     matBase.SetTexture("_MainTex", textureOpts[textureBase]);
     matBase.SetColor("_Color", colorOpts[colorBase]);

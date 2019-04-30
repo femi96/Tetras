@@ -24,6 +24,10 @@ public class GameCamera : MonoBehaviour {
 
   void Start() {
 
+    // Initialize colors
+    colorStart = game.GetNextColor();
+    colorEnd = game.GetNextColor();
+
     // Camera positioning
     Vector3 angles = transform.eulerAngles;
     x = angles.y;
@@ -35,72 +39,9 @@ public class GameCamera : MonoBehaviour {
     distance = distanceMax;
   }
 
-  private float cr = 95;
-  private float cg = 205;
-  private float cb = 205;
-  private float cLow = 95;
-  private float cHigh = 205;
-  private float rgbChange = 0;
-  public float cRate = 1f;
-
   void Update() {
 
-    // Color
-    if (rgbChange == 1) {
-      cr += cRate * Time.deltaTime;
-
-      if (cr >= cHigh) {
-        cr = cHigh;
-        rgbChange = 2;
-      }
-    }
-
-    if (rgbChange == 0) {
-      cg -= cRate * Time.deltaTime;
-
-      if (cg <= cLow) {
-        cg = cLow;
-        rgbChange = 1;
-      }
-    }
-
-    if (rgbChange == 3) {
-      cg += cRate * Time.deltaTime;
-
-      if (cg >= cHigh) {
-        cg = cHigh;
-        rgbChange = 4;
-      }
-    }
-
-    if (rgbChange == 2) {
-      cb -= cRate * Time.deltaTime;
-
-      if (cb <= cLow) {
-        cb = cLow;
-        rgbChange = 3;
-      }
-    }
-
-    if (rgbChange == 5) {
-      cb += cRate * Time.deltaTime;
-
-      if (cb >= cHigh) {
-        cb = cHigh;
-        rgbChange = 0;
-      }
-    }
-
-    if (rgbChange == 4) {
-      cr -= cRate * Time.deltaTime;
-
-      if (cr <= cLow) {
-        cr = cLow;
-        rgbChange = 5;
-      }
-    }
-
-    Camera.main.backgroundColor = new Color(cr / 256f, cg / 256f, cb / 256f);
+    UpdateColor();
 
     // Lock cursor to screen on input
     if (CanPlayerMove()) {
@@ -109,6 +50,26 @@ public class GameCamera : MonoBehaviour {
     } else {
       Cursor.lockState = CursorLockMode.None;
       Cursor.visible = true;
+    }
+  }
+
+  private Color colorStart = new Color(1f, 1f, 1f);
+  private Color colorEnd = new Color(0f, 0f, 0f);
+  private float colorTime = 0f;
+
+  private void UpdateColor() {
+
+    float cRate = game.GetColorRate();
+    colorTime += cRate * Time.deltaTime;
+    float a = Mathf.Clamp(colorTime, 0.0f, 1.0f);
+    float b = 1.0f - a;
+
+    Camera.main.backgroundColor = b * colorStart + a * colorEnd;
+
+    if (colorTime > 1.0f) {
+      colorTime -= 1.0f;
+      colorStart = colorEnd;
+      colorEnd = game.GetNextColor();
     }
   }
 
