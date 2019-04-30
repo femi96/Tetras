@@ -15,7 +15,6 @@ Priority 3
 
 Priority 4
 - Add style options for background and material
-- Remove files i dont own
 - Build for personal website
 
 Priority 5 : Low

@@ -33,9 +33,9 @@ public class Game : MonoBehaviour {
   private int colorPreview = 4;
   private int colorBase = 1;
   private int[] colors = new int[8] { 8, 12, 13, 17, 14, 10, 16, 7 };
-  private int textureBase = 0;
-  private int texturePreview = 1;
-  private int[] textures = new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
+  private int textureBase = 2;
+  private int texturePreview = 2;
+  private int[] textures = new int[8] { 1, 1, 1, 1, 1, 1, 1, 1 };
 
   [Header("Progression")]
   private int level = 0;

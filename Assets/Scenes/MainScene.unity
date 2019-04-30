@@ -11218,17 +11218,10 @@ MonoBehaviour:
   - {r: 0.6431373, g: 0.2509804, b: 1, a: 1}
   textureOpts:
   - {fileID: 10305, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10904, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 2800000, guid: 03d07158bd20ead4d92e9e919b160652, type: 3}
-  - {fileID: 2800000, guid: 93f3951714825da4daf5e683e034eca4, type: 3}
-  - {fileID: 2800000, guid: e856ae71101ce32428449d76f5464407, type: 3}
-  - {fileID: 2800000, guid: 126440b66fa5cff44904917e51c0e7e3, type: 3}
-  - {fileID: 2800000, guid: b58b4fc4f82890b42bfc7907902d0a50, type: 3}
-  - {fileID: 2800000, guid: 30d03d3319bf57449b9675e1b109a31d, type: 3}
-  - {fileID: 2800000, guid: 0c1b4fb135a326747b3421f184cf4e4f, type: 3}
-  - {fileID: 2800000, guid: a801ea7105458f44b9b604a820be0ee3, type: 3}
-  - {fileID: 2800000, guid: d2248da1443f32645b8e957225dacbcc, type: 3}
   - {fileID: 2800000, guid: 90744e309751caa49ba2349960108b7c, type: 3}
+  - {fileID: 10906, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2800000, guid: d2248da1443f32645b8e957225dacbcc, type: 3}
+  - {fileID: 2800000, guid: 03d07158bd20ead4d92e9e919b160652, type: 3}
   inGame: 0
   cube: {fileID: 1628295639649090, guid: 0afd35a9a591df94e8946f336fb79e35, type: 2}
   previewCube: {fileID: 1208080461853788, guid: cf0b3b676c48a5944b78915ad8a78d00,
