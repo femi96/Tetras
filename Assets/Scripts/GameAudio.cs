@@ -14,15 +14,25 @@ public class GameAudio : MonoBehaviour {
 
   void Update() {
     if (Input.GetKeyDown(KeyCode.Minus)) {
-      bgMusic.volume -= bgMusic.volume * 0.1f;
+      VolumeDown();
     }
 
     if (Input.GetKeyDown(KeyCode.Equals)) {
-      bgMusic.volume += bgMusic.volume * 0.111111f;
+      VolumeUp();
     }
 
     if (Input.GetKeyDown(KeyCode.M)) {
-      bgMusic.mute = !bgMusic.mute;
+      ToggleMute();
     }
+  }
+
+  public void VolumeDown() {
+    bgMusic.volume -= bgMusic.volume * 0.1f;
+  }
+  public void VolumeUp() {
+    bgMusic.volume += bgMusic.volume * 0.111111f;
+  }
+  public void ToggleMute() {
+    bgMusic.mute = !bgMusic.mute;
   }
 }

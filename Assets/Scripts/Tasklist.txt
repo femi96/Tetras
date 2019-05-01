@@ -2,6 +2,5 @@
 
 - Make level name and color based on level
 - Add colors based on levels
-- Add volume controls to UI
 
 Unranked
