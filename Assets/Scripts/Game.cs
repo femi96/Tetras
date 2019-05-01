@@ -527,20 +527,27 @@ public class Game : MonoBehaviour {
   // Level Code
   //
 
+  [System.Serializable]
+  public struct levelDetail {
+    public string name;
+    public Color[] colors;
+    public float rate;
+  }
+
   [Header("Level Details")]
-  public Color[] camColors;
+  public levelDetail[] details;
   private int colorInd = 0;
 
   public Color GetNextColor() {
 
-    Color nextColor = camColors[colorInd];
+    Color nextColor = details[level].colors[colorInd];
     colorInd += 1;
-    colorInd = colorInd % camColors.Length;
+    colorInd = colorInd % details[level].colors.Length;
     return nextColor;
   }
 
   public float GetColorRate() {
-    return 1.0f;
+    return details[level].rate;
   }
 
   //
