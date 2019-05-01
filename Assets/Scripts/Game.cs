@@ -98,6 +98,9 @@ public class Game : MonoBehaviour {
   public Image[] tetraColorUI;
   public Image[] tetraTextureUI;
 
+  public Text scoreBonusText;
+  private float scoreBonusTime = 0f;
+
   void Start() {
     highScoreText.text = "" + highScore;
     scoreText.text = "" + score;
@@ -114,6 +117,11 @@ public class Game : MonoBehaviour {
     if (inGame) {
       CheckInput();
       UpdateFall();
+
+      scoreBonusTime -= Time.deltaTime;
+      Color sbt = scoreBonusText.color;
+      sbt.a = Mathf.Clamp(scoreBonusTime, 0f, 1f);
+      scoreBonusText.color = sbt;
     }
   }
 
@@ -434,7 +442,9 @@ public class Game : MonoBehaviour {
       }
 
       bonus = bonus + (bonus * level / 2);
-
+      scoreBonusText.text = "+" + bonus;
+      // scoreBonusText.gameObject.SetActive(true);
+      scoreBonusTime = 2f;
       score += bonus;
       exp += layers.Count * gridSizeX * gridSizeZ;
       int expCap = 16 + Mathf.RoundToInt(level / 3.125f);

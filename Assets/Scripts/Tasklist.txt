@@ -13,6 +13,5 @@ Priority 3
 
 Priority 5 : Low
 - Add colors based on levels
-- Add score bonus text
 
 Unranked
