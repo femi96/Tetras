@@ -83,6 +83,7 @@ public class Game : MonoBehaviour {
   public Text heldText;
   public Text cameraMoveText;
   public Text levelText;
+  public Text levelNameText;
   public GameObject comboUI;
   public Text comboText;
   public GameObject optionsUI;
@@ -355,7 +356,7 @@ public class Game : MonoBehaviour {
   }
 
   private void UpdateFall() {
-    float fallSpeed = 1.0f + 0.05f * level;
+    float fallSpeed = 1.0f + details[level].fall;
     fallSpeed = fallSpeed * fallSpeedMultiplier;
 
     if (Input.GetKey(KeyCode.F)) {
@@ -549,14 +550,15 @@ public class Game : MonoBehaviour {
   //
 
   [System.Serializable]
-  public struct levelDetail {
+  public struct LevelDetail {
     public string name;
     public Color[] colors;
     public float rate;
+    public float fall;
   }
 
   [Header("Level Details")]
-  public levelDetail[] details;
+  public LevelDetail[] details;
   private int colorInd = 0;
 
   public Color GetNextColor() {
@@ -624,6 +626,7 @@ public class Game : MonoBehaviour {
   private void UpdateLevelUI() {
 
     levelText.text = "" + level;
+    levelNameText.text = details[level].name;
   }
 
   public void OpenTwitter() {

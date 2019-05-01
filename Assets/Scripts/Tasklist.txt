@@ -1,6 +1,4 @@
 
-
-- Make level name and color based on level
-- Add colors based on levels
+- Add level details with color, name, color rate, and speed
 
 Unranked
