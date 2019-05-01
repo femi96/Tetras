@@ -2,13 +2,9 @@
 
 Priority 2
 - Add music & sound effects
-- Add controls to the UI
-- Add better hold UI
-- Add queue UI
 
 Priority 3
 - Make level name and color based on level
-- Fix controls UI for fast fall
 
 Priority 5 : Low
 - Add colors based on levels
