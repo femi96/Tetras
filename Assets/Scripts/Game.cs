@@ -466,6 +466,7 @@ public class Game : MonoBehaviour {
     scoreText.text = "" + score;
     comboText.text = "" + combo;
     comboUI.SetActive(combo > 1);
+    UpdatePreview();
   }
 
   private void SlamBlock() {
