@@ -122,7 +122,7 @@ public class Game : MonoBehaviour {
       Destroy(child.gameObject);
     }
 
-    gridBlocks = new GameObject[gridSizeX, gridHeight, gridSizeZ];
+    gridBlocks = new GameObject[gridSizeX, gridHeight + 2, gridSizeZ];
     currentCoords = new Vector3Int[4];
     currentBlocks = new GameObject[4];
     previewCoords = new Vector3Int[4];
@@ -229,7 +229,7 @@ public class Game : MonoBehaviour {
       hasHeld = false;
     }
 
-    int l = gridHeight - 1;
+    int l = gridHeight + 1;
     Material m = mats[(int)currentType];
     int cx = gridSizeX / 2;
     int cz = gridSizeZ / 2;
@@ -295,14 +295,6 @@ public class Game : MonoBehaviour {
       throw new Exception("Missing Type in NewTetraCube");
     }
 
-    bool endGame = false;
-
-    foreach (Vector3Int coords in currentCoords) {
-      if (gridBlocks[coords.x, coords.y, coords.z] != null) {
-        endGame = true;
-      }
-    }
-
     for (int i = 0; i < currentCoords.Length; i++) {
       currentBlocks[i] = Instantiate(cube, transform);
       currentBlocks[i].transform.position = currentCoords[i] + gridOffset;
@@ -312,10 +304,6 @@ public class Game : MonoBehaviour {
     Color pivotColor = 0.8f * m.color;
     currentBlocks[0].GetComponent<Renderer>().material.SetColor("_Color", pivotColor);
     UpdatePreview();
-
-    if (endGame) {
-      EndGame();
-    }
   }
 
   private void CheckInput() {
@@ -377,6 +365,13 @@ public class Game : MonoBehaviour {
       bool fall = MoveBlock(0, -1, 0);
 
       if (!fall) {
+        foreach (Vector3Int coords in currentCoords) {
+          if (coords.y >= gridHeight) {
+            EndGame();
+            return;
+          }
+        }
+
         LockTetraCube();
         NewTetraCube(false);
         ClearLines();
@@ -481,7 +476,7 @@ public class Game : MonoBehaviour {
       int nz = coords.z + z;
       bool collision = false;
       collision = collision || nx >= gridSizeX || nx < 0;
-      collision = collision || ny >= gridHeight || ny < 0;
+      collision = collision || ny >= gridHeight + 2 || ny < 0;
       collision = collision || nz >= gridSizeZ || nz < 0;
       collision = collision || gridBlocks[nx, ny, nz] != null;
 
@@ -520,7 +515,7 @@ public class Game : MonoBehaviour {
       int nz = coords.z;
       bool collision = false;
       collision = collision || nx >= gridSizeX || nx < 0;
-      collision = collision || ny >= gridHeight || ny < 0;
+      collision = collision || ny >= gridHeight + 2 || ny < 0;
       collision = collision || nz >= gridSizeZ || nz < 0;
       collision = collision || gridBlocks[nx, ny, nz] != null;
 
@@ -594,7 +589,7 @@ public class Game : MonoBehaviour {
     while (!collision) {
       foreach (Vector3Int coords in previewCoords) {
         int ny = coords.y - 1;
-        collision = collision || ny >= gridHeight || ny < 0;
+        collision = collision || ny >= gridHeight + 2 || ny < 0;
         collision = collision || gridBlocks[coords.x, ny, coords.z] != null;
       }
 
