@@ -2,8 +2,6 @@
 
 - Make level name and color based on level
 - Add colors based on levels
-- Music credit
-- Fix preview on line clear
 - Add volume controls to UI
 
 Unranked

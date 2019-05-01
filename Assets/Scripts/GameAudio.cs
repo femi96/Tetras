@@ -18,7 +18,11 @@ public class GameAudio : MonoBehaviour {
     }
 
     if (Input.GetKeyDown(KeyCode.Equals)) {
-      bgMusic.volume += bgMusic.volume * 0.1111f;
+      bgMusic.volume += bgMusic.volume * 0.111111f;
+    }
+
+    if (Input.GetKeyDown(KeyCode.M)) {
+      bgMusic.mute = !bgMusic.mute;
     }
   }
 }
