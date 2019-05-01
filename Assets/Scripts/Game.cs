@@ -72,6 +72,8 @@ public class Game : MonoBehaviour {
 
   public bool moveCamInMenu;
 
+  public LineRenderer topLine;
+
 
   [Header("UI")]
   public GameObject menuUI;
@@ -138,6 +140,14 @@ public class Game : MonoBehaviour {
         go.GetComponent<Renderer>().material = matBase;
       }
     }
+
+
+    topLine.SetPositions(new Vector3[] {
+      new Vector3(gridSizeX / 2, gridHeight - 0.5f, gridSizeZ / 2),
+      new Vector3(-gridSizeX / 2, gridHeight - 0.5f, gridSizeZ / 2),
+      new Vector3(-gridSizeX / 2, gridHeight - 0.5f, -gridSizeZ / 2),
+      new Vector3(gridSizeX / 2, gridHeight - 0.5f, -gridSizeZ / 2),
+    });
 
     NewTetraCube(false);
     score = 0;
@@ -285,10 +295,11 @@ public class Game : MonoBehaviour {
       throw new Exception("Missing Type in NewTetraCube");
     }
 
+    bool endGame = false;
+
     foreach (Vector3Int coords in currentCoords) {
       if (gridBlocks[coords.x, coords.y, coords.z] != null) {
-        EndGame();
-        return;
+        endGame = true;
       }
     }
 
@@ -301,6 +312,10 @@ public class Game : MonoBehaviour {
     Color pivotColor = 0.8f * m.color;
     currentBlocks[0].GetComponent<Renderer>().material.SetColor("_Color", pivotColor);
     UpdatePreview();
+
+    if (endGame) {
+      EndGame();
+    }
   }
 
   private void CheckInput() {

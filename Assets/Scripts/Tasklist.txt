@@ -5,21 +5,14 @@ Priority 2
 - Add controls to the UI
 - Add better hold UI
 - Add queue UI
-- Add marking for top row
 
 Priority 3
 - Make level name and color based on level
 - Make color effect light
 - Fix controls UI for fast fall
-- Keyboard control for menus
-
-Priority 4
-- Add style options for background and material
-- Build for personal website
 
 Priority 5 : Low
 - Add colors based on levels
 - Add score bonus text
-- Add effects to clear lines
 
 Unranked
