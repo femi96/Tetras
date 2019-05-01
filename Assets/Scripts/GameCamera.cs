@@ -56,6 +56,7 @@ public class GameCamera : MonoBehaviour {
   private Color colorStart = new Color(1f, 1f, 1f);
   private Color colorEnd = new Color(0f, 0f, 0f);
   private float colorTime = 0f;
+  public Light dirLight;
 
   private void UpdateColor() {
 
@@ -65,6 +66,7 @@ public class GameCamera : MonoBehaviour {
     float b = 1.0f - a;
 
     Camera.main.backgroundColor = b * colorStart + a * colorEnd;
+    dirLight.color = 0.5f * (b * colorStart + a * colorEnd) + 0.5f * Color.white;
 
     if (colorTime > 1.0f) {
       colorTime -= 1.0f;

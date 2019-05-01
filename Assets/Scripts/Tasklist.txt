@@ -8,7 +8,6 @@ Priority 2
 
 Priority 3
 - Make level name and color based on level
-- Make color effect light
 - Fix controls UI for fast fall
 
 Priority 5 : Low
