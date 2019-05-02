@@ -561,11 +561,19 @@ public class Game : MonoBehaviour {
   [Header("Level Details")]
   public LevelDetail[] details;
   private int colorInd = 0;
+  private bool useDetailColor = true;
 
   public Color GetNextColor() {
+    Color nextColor;
 
-    colorInd = colorInd % details[level].colors.Length;
-    Color nextColor = details[level].colors[colorInd];
+    if (useDetailColor) {
+      colorInd = colorInd % details[level].colors.Length;
+      nextColor = details[level].colors[colorInd];
+    } else {
+      colorInd = colorInd % details[0].colors.Length;
+      nextColor = details[0].colors[colorInd];
+    }
+
     colorInd += 1;
     return nextColor;
   }
@@ -831,5 +839,9 @@ public class Game : MonoBehaviour {
       tetraColorUI[i + 2].sprite = Sprite.Create((Texture2D)textureOpts[textures[i]], new Rect(0, 0, textureOpts[textures[i]].width, textureOpts[textures[i]].height), pivot);
       tetraTextureUI[i + 2].sprite = Sprite.Create((Texture2D)textureOpts[textures[i]], new Rect(0, 0, textureOpts[textures[i]].width, textureOpts[textures[i]].height), pivot);
     }
+  }
+
+  public void ToggleLevelColors(bool mode) {
+    useDetailColor = mode;
   }
 }
