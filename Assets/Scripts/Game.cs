@@ -166,7 +166,7 @@ public class Game : MonoBehaviour {
     gameUI.SetActive(true);
 
     // Progression
-    level = 12;
+    level = 0;
     exp = 0;
     combo = 0;
     UpdateLevelUI();
@@ -448,19 +448,20 @@ public class Game : MonoBehaviour {
       scoreBonusTime = 2f;
       score += bonus;
       exp += layers.Count * gridSizeX * gridSizeZ;
-      int expCap = 16 + Mathf.RoundToInt(level / 3.125f);
-
-      while (exp >= expCap && level < 50) {
-        exp -= expCap;
-        level += 1;
-        UpdateLevelUI();
-        expCap = 16 + Mathf.RoundToInt(level / 3.125f);
-      }
 
       if (highScore < score)
         highScore = score;
     } else {
       combo = 0;
+    }
+
+    int expCap = 16 + Mathf.RoundToInt(level / 3.125f);
+
+    if (exp >= expCap && level < 50) {
+      exp -= expCap;
+      level += 1;
+      UpdateLevelUI();
+      expCap = 16 + Mathf.RoundToInt(level / 3.125f);
     }
 
     highScoreText.text = "" + highScore;
