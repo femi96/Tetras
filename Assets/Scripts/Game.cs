@@ -166,8 +166,8 @@ public class Game : MonoBehaviour {
     gameUI.SetActive(true);
 
     // Progression
-    level = 0;
-    exp = -16;
+    level = 12;
+    exp = 0;
     combo = 0;
     UpdateLevelUI();
     comboUI.SetActive(false);
@@ -563,9 +563,9 @@ public class Game : MonoBehaviour {
 
   public Color GetNextColor() {
 
+    colorInd = colorInd % details[level].colors.Length;
     Color nextColor = details[level].colors[colorInd];
     colorInd += 1;
-    colorInd = colorInd % details[level].colors.Length;
     return nextColor;
   }
 

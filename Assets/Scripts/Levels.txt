@@ -1,8 +1,7 @@
 
-
 0 Genesis (rainbow)
-1 This is the beginning
-2 Red like roses (red and pink)
+1 Memories of you
+2 Red like Roses (red and pink)
 3 Blue Sky
 4 Yellow
 5 Green
@@ -54,4 +53,5 @@
 47 Undead for 9 years
 48 Perpetual Burnout
 49 Life could be so fuckin easy man
-50 Impermanence with memories of you (more colorful than genesis)
+
+50 Impermanence (more colorful than genesis)
