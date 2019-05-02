@@ -1,17 +1,57 @@
 
 
-0 Start
-1
-10 Death
-20 Purgatory
-30 Hell
-40 Hope
-50 End
+0 Genesis (rainbow)
+1 This is the beginning
+2 Red like roses (red and pink)
+3 Blue Sky
+4 Yellow
+5 Green
+6 Violet
+7 Orange
+8 Pink + White
+9 Midnight
 
-Samael, Archangel of Death, Venom of God
-Asmodai, Sword of Samael, Son of Lilith
-Demon of Lust, Opposite St. John the Baptist
+10 Purgatory (pale colors)
+11 Confessions
+12 Peaceless Sleep
+13 Dreamless Night
+14 Where am I
+15 Up days
+16 Down days
+17 I don't know
+18 Let Me Out
+19 Papercut
 
-Libertarians are bootlickers
-Liberal capitalists enable fascism
-Regulatory capture is a feature of capitalism
+20 Death (cool colors)
+21 The faithful truth
+22 Visit from Samael
+23 Angel of Death
+24 Venom of God
+25 And they spoke the words
+26 "Trans rights"
+27 "Fascism is a loser ideology"
+28 "Regulatory capture is a feature of capitalism"
+29 And now we descend
+
+30 The Fifth Circle of Hell (hot colors)
+31 Fill me with wrath, fill me with sin
+32 Sadness from time ill spent
+33 Fascism came home
+34 Here the viper rests its head
+35 Devouring its tail
+36 Libertarians are bootlickers
+37 Liberal capitalists are enablers
+38 Many things are bad but some things are worse
+39 And some things are better
+
+40 Hope (greens and purples and golds)
+41 A desire without trust
+42 Let it purify the soul
+43 Split my ribs open
+44 Let the blonde leak out
+45 Eyes up, eyes forward
+46 Pursuing self without goal
+47 Undead for 9 years
+48 Perpetual Burnout
+49 Life could be so fuckin easy man
+50 Impermanence with memories of you (more colorful than genesis)
